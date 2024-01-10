@@ -5,8 +5,8 @@
 #include <sys/wait.h>
 
 /**
+ * main - starting point
  * prompt-function - displays a command prompt
- * main - prompt program
  *
  * Return: 0 when success
  */

@@ -14,9 +14,9 @@
 * Return: an int
 */
 
-int main(int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
-if (argc > 1) 
+	if (argc > 1)
 {
 /* Non-interactive mode */
 char **args = &argv[1]; /* Use the command-line argument as the command */
@@ -29,18 +29,18 @@ return (1);
 char *command = NULL;
 size_t bufsize = 0;
 
-while (1) 
+while (1)
 {
 printf("#cisfun$ "); /* Display the prompt */
 ssize_t read = getline(&command, &bufsize, stdin);
 
-if (read == -1) 
+if (read == -1)
 {
-if (feof(stdin)) 
+	if (feof(stdin))
 {
 printf("\n");
 break; /* End of file condition (Ctrl+D) */
-} 
+}
 else
 {
 perror("getline");
@@ -50,7 +50,7 @@ return (1);
 }
 
 /* Remove the newline character at the end of the command */
-if (command[read - 1] == '\n') 
+if (command[read - 1] == '\n')
 {
 command[read - 1] = '\0';
 }
@@ -60,25 +60,25 @@ args[0] = command;
 args[1] = NULL;
 
 pid_t pid = fork(); /* Create a child process */
-if (pid == -1) 
+if (pid == -1)
 {
 perror("fork");
 free(command); /* Free the dynamically allocated buffer */
 return (1);
-} 
-else if (pid == 0) 
+}
+else if (pid == 0)
 {
 /* Child process */
 execve(args[0], args, NULL); /* Execute the command */
 perror("execve"); /* This line will only be reached if execve fails */
 free(command); /* Free the dynamically allocated buffer */
 return (1);
-} 
-else 
+}
+else
 {
 /* Parent process */
 int status;
-if (waitpid(pid, &status, 0) == -1) 
+if (waitpid(pid, &status, 0) == -1)
 {
 perror("waitpid");
 free(command); /* Free the dynamically allocated buffer */
